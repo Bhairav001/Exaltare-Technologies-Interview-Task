@@ -1,35 +1,74 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from 'react';
+import "./App.css"
+const LoginForm = () => {
+  const [formData, setFormData] = useState({ username: '', password: '' });
+  const [showModal, setShowModal] = useState(false);
 
-function App() {
-  const [count, setCount] = useState(0)
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const handleSubmit = () => {
+    const { username, password } = formData;
+
+    if (username.trim() === '' || password.trim() === '') {
+      // Show modal for incomplete details
+      setShowModal(true);
+    } else {
+      // Log details to console
+      console.log('Username:', username);
+      console.log('Password:', password);
+
+      // Store details in localStorage
+      localStorage.setItem('username', username);
+      localStorage.setItem('password', password);
+
+      // Show success modal
+      setShowModal(true);
+    }
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+    <div>
+      <form>
+        <label>
+          Username:
+          <input
+            type="text"
+            name="username"
+            value={formData.username}
+            onChange={handleInputChange}
+          />
+        </label>
+        <br />
+        <label>
+          Password:
+          <input
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleInputChange}
+          />
+        </label>
+        <br />
+        <button type="button" onClick={handleSubmit}>
+          Submit
         </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+      </form>
 
-export default App
+      {showModal && (
+        <div className="modal">
+          {formData.username && formData.password ? (
+            <p>Login successfully done!</p>
+          ) : (
+            <p>Please enter all details first.</p>
+          )}
+          <button onClick={() => setShowModal(false)}>Close</button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default LoginForm;
