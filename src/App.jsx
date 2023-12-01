@@ -24,6 +24,7 @@ const LoginForm = () => {
       localStorage.setItem('username', username);
       localStorage.setItem('password', password);
 
+      // Show success modal
       setShowModal(true);
     }
   };
@@ -33,21 +34,21 @@ const LoginForm = () => {
       <h2>Login Form</h2>
       <form>
         <label>Username:</label>
-          <br />
-          <input
-            type="text"
-            name="username"
-            value={formData.username}
-            onChange={handleInputChange}
-          />
+        <br />
+        <input
+          type="text"
+          name="username"
+          value={formData.username}
+          onChange={handleInputChange}
+        />
         <br />
         <label>Password:</label><br />
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleInputChange}
-          />
+        <input
+          type="password"
+          name="password"
+          value={formData.password}
+          onChange={handleInputChange}
+        />
         <br />
         <button type="button" onClick={handleSubmit}>
           Submit
